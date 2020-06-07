@@ -1,0 +1,8 @@
+.nav-element {
+  color: rgba(126, 126, 126, 0.671);
+  text-decoration: none;
+}
+a.nav-element:hover {
+  text-decoration: none;
+  color: rgba(250, 128, 114, 0.822);
+}

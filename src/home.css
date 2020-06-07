@@ -1,64 +1,24 @@
 .search-group {
-  background: rgba(250, 128, 114, 0.527);
-  display: flex;
-  justify-content: space-around;
+  background: rgba(250, 128, 114, 0.384);
+
   align-items: center;
   min-height: 10vh;
-  color: wheat;
-  margin: auto;
-}
-.search-element {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 50;
-  width: 250px;
-  height: 40px;
-}
-.cuisine {
-  justify-content: space-around;
-  align-items: center;
-  min-height: 50;
-  width: 250px;
-  height: 40px;
-}
-button {
-  background-color: rgba(207, 207, 86, 0.555);
+  color: rgba(124, 124, 124, 0.836);
 }
 
-.flow {
+a.link-element:hover {
+  text-decoration: none;
+  color: rgba(250, 128, 114, 0.822);
+}
+
+.equal {
   display: flex;
+  display: -webkit-flex;
   flex-wrap: wrap;
-  overflow-wrap: normal;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 10vh;
-  color: rgb(221, 162, 51);
-  margin: auto;
 }
-
-.restaurant-overlook {
-  justify-content: space-around;
-  align-items: center;
-  min-height: 20;
+p {
   width: 250px;
-  height: 100px;
-}
-.restaurant-container {
-  display: flex;
-}
-.add-fav-btn {
-  justify-content: space-around;
-  align-items: center;
-}
-
-.restaurant-overlook-container {
-  align-items: center;
-  min-height: 20;
-  margin: 5px;
-  padding: 5px;
-}
-img {
-  width: 100px;
-  height: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-wrap: normal;
 }

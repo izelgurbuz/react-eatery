@@ -3,8 +3,24 @@ import { useState } from "react";
 import "../home.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addRestaurant } from "../Redux/Actions";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import dotenv from "dotenv";
+import {
+  FormGroup,
+  Form,
+  Button,
+  InputGroup,
+  Row,
+  Col,
+  Image,
+  Container,
+  Jumbotron,
+} from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMapMarkedAlt,
+  faMapMarkerAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const MAIN_URL = `https://developers.zomato.com/api/v2.1/`;
@@ -56,6 +72,7 @@ const Home = () => {
           item.restaurant.name.toLowerCase().includes(keyword.toLowerCase())
         )
       );
+      console.log(response.restaurants);
       setKeyWord("");
     }
   };
@@ -105,78 +122,110 @@ const Home = () => {
     setParams(paramsConverted);
   };
 
-  return (
-    <div>
-      <div className="Home">
-        <form className="search-group" onSubmit={setSearchParams}>
-          <input
-            value={keyword}
-            className="search-element"
-            onChange={updateKey}
-            placeholder="Key"
-          />
+  const active = {
+    fontWeight: "bold",
+  };
 
-          <input
-            type="text"
-            value={city}
-            className="search-element"
-            onChange={updateCity}
-            list="cities"
-            placeholder="City"
-            autoComplete="on"
-          />
-          <datalist id="cities">
-            {citySuggestions.map((item) => (
-              <option key={item.name}>{item.name}</option>
-            ))}
-          </datalist>
-          <div
-            className="search-element"
+  return (
+    <div className="Home">
+      <div className="Search">
+        <Form
+          className="d-flex justify-content-around search-group m-3 row"
+          onSubmit={setSearchParams}
+        >
+          <FormGroup className="m-2 col-md-3  ">
+            <Form.Control
+              type="text"
+              placeholder="Key"
+              onChange={updateKey}
+              value={keyword}
+            />
+          </FormGroup>
+          <FormGroup className="m-2 col-md-3">
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                </InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                type="text"
+                value={city}
+                onChange={updateCity}
+                list="cities"
+                placeholder="City"
+                className="js-example-basic-single"
+              />
+              <datalist id="cities">
+                {citySuggestions.map((item) => (
+                  <option key={item.name}>{item.name}</option>
+                ))}
+              </datalist>
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup
+            className="m-2 col-md-3"
             style={
               citySuggestions.map((item) => item.name).includes(city)
-                ? { display: "flex" }
+                ? {}
                 : { display: "none" }
             }
           >
-            <input
+            <Form.Control
               type="text"
               value={cuisine}
               onChange={updateCuisine}
               list="cuisines"
               placeholder="Cuisine"
-              autoComplete="on"
-              className="cuisine"
             />
             <datalist id="cuisines">
               {cuisineSuggestions.map((item) => (
                 <option key={item.id}>{item.cuisine.cuisine_name}</option>
               ))}
             </datalist>
-          </div>
+          </FormGroup>
 
-          <button id="submit-button" type="submit" className="search-element">
+          <Button id="submit-button" type="submit">
             Search
-          </button>
-        </form>
+          </Button>
+        </Form>
       </div>
-      <div className="flow">
+      <div className="flow row">
         {restaurants.map((item) => (
-          <div key={item.restaurant.id} className="restaurant-container">
-            <Link to={`/restaurants/${item.restaurant.id}`}>
-              <div className="restaurant-overlook-container">
-                <img
-                  className="restaurant-overlook"
-                  src={item.restaurant.featured_image}
-                  alt=""
-                />
-                <h3 className="restaurant-overlook">{item.restaurant.name}</h3>
-              </div>
-            </Link>
-            <div className="add-fav-btn">
-              <button onClick={() => dispatch(addRestaurant(item.restaurant))}>
-                Add to Favs
-              </button>
-            </div>
+          <div key={item.restaurant.id} className="col-6 equal">
+            <Jumbotron fluid>
+              <Container className="m-3">
+                <Row>
+                  <Col xs={6} md={4}>
+                    <NavLink
+                      to={`/restaurants/${item.restaurant.id}`}
+                      className="link-element"
+                      activeStyle={active}
+                    >
+                      <Image src={item.restaurant.featured_image} fluid />
+                    </NavLink>
+                  </Col>
+                  <Col xs={6} md={4}>
+                    <Container>
+                      <h3 style={{ textDecoration: "none" }}>
+                        {item.restaurant.name}
+                      </h3>
+                      <p>{item.restaurant.timings}</p>
+                      <p>
+                        <Button
+                          onClick={() =>
+                            dispatch(addRestaurant(item.restaurant))
+                          }
+                        >
+                          Add to Favs
+                        </Button>
+                      </p>
+                    </Container>
+                  </Col>
+                </Row>
+              </Container>
+            </Jumbotron>
           </div>
         ))}
       </div>

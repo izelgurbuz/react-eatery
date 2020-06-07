@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addComment, deleteComment } from "../Redux/Actions";
 import "../restaurant.css";
 import dotenv from "dotenv";
+import { Image, Container, Row, Col } from "react-bootstrap";
 
 const Restaurant = () => {
   const MAIN_URL = `https://developers.zomato.com/api/v2.1/`;
@@ -47,40 +48,49 @@ const Restaurant = () => {
   };
 
   return (
-    <div className="restaurant-container">
-      <div className="restaurant">
-        <h2>{restaurant.name}</h2> <img src={restaurant.featured_image}></img>
-      </div>
-      <div className="comment-section">
-        {comments
-          .filter((item) => item.restaurantId === params.id)
-          .map((item) => (
-            <div>
-              <h6>{`${item.commentId}:`}</h6>
-              <div className="comment-section">
-                <div className="">
-                  <h5>{item.text}</h5>
-                </div>
-                <div>
-                  <button
-                    onClick={() => dispatch(deleteComment(item.commentId))}
-                  >
-                    Delete
-                  </button>
+    <Container>
+      <h2>{restaurant.name}</h2>
+      <Row className="justify-content-between">
+        <Col md={5} xs={12}>
+          <div>
+            <Image
+              fluid
+              style={{ height: "30rem" }}
+              src={restaurant.featured_image}
+            ></Image>
+          </div>
+        </Col>
+        <Col md={5} xs={12}>
+          {comments
+            .filter((item) => item.restaurantId === params.id)
+            .map((item) => (
+              <div>
+                <h6>{`${item.commentId}:`}</h6>
+                <div className="comment-section">
+                  <div className="">
+                    <h5>{item.text}</h5>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => dispatch(deleteComment(item.commentId))}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        <div>
-          <input
-            className="newComment"
-            value={text}
-            onChange={UpdateText}
-          ></input>
-          <button onClick={sendComment}>Send Comment</button>
-        </div>
-      </div>
-    </div>
+            ))}
+          <div>
+            <input
+              className="newComment"
+              value={text}
+              onChange={UpdateText}
+            ></input>
+            <button onClick={sendComment}>Send Comment</button>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

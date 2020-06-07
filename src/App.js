@@ -6,17 +6,18 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import Nav from "./Components/Nav";
+import NavBar from "./Components/Nav";
 import Home from "./Components/Home";
 import MyFavorites from "./Components/MyFavorites";
 import About from "./Components/About";
 import Restaurant from "./Components/Restaurant";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Nav />
+        <NavBar />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/myfavorites" exact component={MyFavorites} />
